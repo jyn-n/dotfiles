@@ -1,0 +1,56 @@
+source "gpg -dq $HOME/.mutt/pw.gpg |"
+
+set imap_user="uaggz@student.kit.edu"
+set imap_pass=$my_pw
+
+set folder=imaps://imap.kit.edu:993/
+
+set spoolfile=+INBOX
+mailboxes = +INBOX
+
+set header_cache=~/.cache/mutt/header
+set message_cachedir=~/.cache/mutt/messages
+source "~/.mutt/purgecache.sh '$message_cachedir'|"
+
+set fast_reply=yes
+set include=yes
+
+unset imap_passive
+set imap_keepalive=300
+set mail_check=30
+
+set postponed = +Drafts
+
+set sort=reverse-threads
+set sort_aux=last-date-received
+
+set record=+Sent
+set realname="Kevin Klinge"
+set from="uaggz@student.kit.edu"
+set use_from=yes
+set smtp_url=smtp://uaggz:ILdN6o*(@smtp.kit.edu:587
+set ssl_force_tls=yes
+
+set alias_file = ~/.mutt/aliases
+set sort_alias = alias
+source $alias_file
+
+set mailcap_path=~/.mutt/mailcap
+auto_view text/html
+alternative_order text/plain text/html
+
+set editor=vim
+
+source $HOME/.mutt/colors.linux
+source $HOME/.mutt/gpg.rc
+
+set crypt_autosign = yes
+set crypt_replyencrypt = no
+set pgp_use_gpg_agent = yes
+set pgp_sign_as = 1FBB803D720796FEF5A0D70F5B073421CD4292AE
+set pgp_timeout = 0
+
+send-hook . 'reset pgp_autoencrypt'
+send-hook . 'reset crypt_replyencrypt'
+source "/bin/sh $HOME/.mutt/generate_pgp_auto |"
+source "/bin/sh $HOME/.mutt/generate_pgp_reply_auto |"

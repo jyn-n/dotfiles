@@ -1,0 +1,17 @@
+Config
+{ font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+, bgColor = "black"
+, fgColor = "red"
+, position = BottomW L 100
+, commands =
+	[ Run Date "%y-%m-%d %H:%M:%S" "date" 5
+	, Run Wireless "wlp4s0" [] 10
+	, Run DynNetwork ["-t", "<rx>|<tx>"] 10
+	, Run BatteryN ["BAT0"] ["-t", "<left>"] 100 "bat0"
+	, Run BatteryN ["BAT1"] ["-t", "<left>"] 100 "bat1"
+	]
+, sepChar = "%"
+, alignSep = "}{"
+, template = "%wlp4s0wi% %dynnetwork% }{ %bat0% %bat1% %date%"
+}
+

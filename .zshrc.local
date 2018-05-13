@@ -1,0 +1,33 @@
+bindkey -v
+export KEYTIMEOUT=1
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+function aur() {
+	su aur -c "pacaur $(echo $@)"
+}
+
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+compdef $_comps[git] config
+
+compdef $_comps[pacaur] aur
+
+function weather() {
+	curl "http://wttr.in/$1" 2>/dev/null
+}
+
+alias mnt="sudo mount /mnt"
+alias umnt="sudo umount /mnt"
+
+function pyfile() {
+	[[ -f $1 ]] && exit 1
+	echo "#!/usr/bin/env python" > $1
+	chmod +x $1
+	vim $1
+}
+
+alias vim="vim -p"
+
+[[ $(/bin/python ~/.check_update.py) != False ]] && cowsay "Have you Syued today?" | lolcat
+
