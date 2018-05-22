@@ -1097,7 +1097,7 @@ c.tabs.close_mouse_button = 'none'
 
 ## Show favicons in the tab bar.
 ## Type: Bool
-c.tabs.favicons.show = False
+c.tabs.favicons.show = 'never'
 
 ## Padding for tab indicators
 ## Type: Padding
@@ -1342,7 +1342,7 @@ config.bind('<Ctrl-Return>', 'follow-selected -t')
 # config.bind('<Ctrl-h>', 'home')
 # config.bind('<Ctrl-p>', 'tab-pin')
 # config.bind('<Ctrl-s>', 'stop')
-config.bind('<Escape>', 'clear-keychain ;; search ;; fullscreen --leave')
+config.bind('<Escape>', 'clear-keychain ;; search ;; fullscreen --leave ;; download-clear')
 config.bind('<F11>', 'fullscreen')
 # config.bind('<F5>', 'reload')
 config.bind('<Return>', 'follow-selected')
