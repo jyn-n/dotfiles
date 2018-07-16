@@ -468,7 +468,7 @@ c.content.cookies.store = False
 ## menu. For QtWebEngine, see `--enable-webengine-inspector` in
 ## `qutebrowser --help` instead.
 ## Type: Bool
-c.content.developer_extras = False
+#c.content.developer_extras = False
 
 ## Try to pre-fetch DNS entries to speed up browsing.
 ## Type: Bool
@@ -998,7 +998,7 @@ c.prompt.filebrowser = False
 ## QtWebEngine to work with Nouveau drivers. This setting requires a
 ## restart.
 ## Type: Bool
-c.qt.force_software_rendering = False
+c.qt.force_software_rendering = "none"
 
 ## Show a scrollbar.
 ## Type: Bool

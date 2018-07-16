@@ -13,6 +13,8 @@ compdef $_comps[git] config
 
 compdef $_comps[pacaur] aur
 
+alias reswap="sudo /usr/bin/swapoff /swapfile && sudo /usr/bin/swapon /swapfile"
+
 function weather() {
 	curl "http://wttr.in/$1" 2>/dev/null
 }
@@ -28,6 +30,15 @@ function pyfile() {
 }
 
 alias vim="vim -p"
+
+function activate_virualenv() {
+	[[ $# -ne 1 ]] && echo "usage: $0 <directory>" && return
+	source $1/bin/activate
+	pip completion --zsh >> $1/.zsh_pip_completions
+	source $1/.zsh_pip_completions
+}
+
+compdef _dirs activate_virtualenv
 
 [[ $(/bin/python ~/.check_update.py) != False ]] && cowsay "Have you Syued today?" | lolcat
 

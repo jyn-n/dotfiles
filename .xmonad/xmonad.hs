@@ -10,10 +10,14 @@ import XMonad.Layout.NoBorders
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
+import Data.Time
+
 main = do
 	replace
-	xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobarrc"
+--	xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobarrc"
 	xmonad $ defaultConfig
+--main =
+--	xmonad =<< statusBar "xmobar ~/.xmonad/xmobarrc" $ defaultConfig
 		{ keys          = keys_
 		, mouseBindings = mouse_
 
@@ -59,6 +63,9 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((altm, xK_F1), spawn "systemctl suspend")
 	, ((altm, xK_F2), spawn "i3lock -uc 000000")
 
+	, ((altm, xK_F3), spawn "xrandr --output HDMI2 --off --output eDP1 --auto")
+	, ((altm, xK_F4), spawn "xrandr --output HDMI2 --auto --output eDP1 --off")
+
 	, ((altm, xK_bracketleft), spawn "xbacklight -dec 10")
 	, ((altm, xK_bracketright), spawn "xbacklight -inc 10")
 	, ((altm, xK_minus), spawn "xbacklight -dec 100")
@@ -75,6 +82,8 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((altm, xK_x), spawn $ term "mutt")
 	, ((altm, xK_c), spawn $ term "pulsemixer")
 	, ((altm, xK_o), restart "/home/cptj/.xmonad/obx.sh" True)
+--	, ((altm, xK_a), spawn "maim -s screenshot_" ++ getCurrentDate ++ ".png")
+	, ((altm, xK_a), spawn "maim -s screenshot$(date +'%Y-%m-%d_%H:%M:%S').png")
 	]
 	++
 	[((m .|. supm, k), windows $ f i)
