@@ -10,9 +10,10 @@ Config
 	, Run BatteryN ["BAT0"] ["-t", "<left>"] 100 "bat0"
 	, Run BatteryN ["BAT1"] ["-t", "<left>"] 100 "bat1"
 	, Run Swap ["-t", "<used>"] 10
+	, Run PipeReader "/home/cptj/.xmonad/message" "message"
 	]
 , sepChar = "%"
 , alignSep = "}{"
-, template = "%wlp4s0wi% %dynnetwork% %swap% }{ %bat0% %bat1% %date%"
+, template = "%wlp4s0wi% %dynnetwork% %swap% %message% }{ %bat0% %bat1% %date%"
 }
 

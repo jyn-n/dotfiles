@@ -412,7 +412,7 @@ c.completion.timestamp_format = '%Y-%m-%d %H:%M:%S'
 ## How many URLs to show in the web history. 0: no history / -1:
 ## unlimited
 ## Type: Int
-c.completion.web_history_max_items = 0
+c.completion.web_history.max_items = 0
 
 ## Whether quitting the application requires a confirmation.
 ## Type: ConfirmQuit
@@ -1002,7 +1002,7 @@ c.qt.force_software_rendering = "none"
 
 ## Show a scrollbar.
 ## Type: Bool
-c.scrolling.bar = False
+c.scrolling.bar = "never"
 
 ## Enable smooth scrolling for web pages. Note smooth scrolling does not
 ## work with the `:scroll-px` command.
@@ -1539,8 +1539,8 @@ config.bind('<Return>', 'prompt-accept', mode='prompt')
 config.bind('<Shift-Tab>', 'prompt-item-focus prev', mode='prompt')
 config.bind('<Tab>', 'prompt-item-focus next', mode='prompt')
 config.bind('<Up>', 'prompt-item-focus prev', mode='prompt')
-config.bind('n', 'prompt-accept no', mode='prompt')
-config.bind('y', 'prompt-accept yes', mode='prompt')
+#config.bind('n', 'prompt-accept no', mode='prompt')
+#config.bind('y', 'prompt-accept yes', mode='prompt')
 
 ## Bindings for register mode
 config.bind('<Escape>', 'leave-mode', mode='register')

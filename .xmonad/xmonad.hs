@@ -14,7 +14,7 @@ import Data.Time
 
 main = do
 	replace
---	xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobarrc"
+	xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobarrc"
 	xmonad $ defaultConfig
 --main =
 --	xmonad =<< statusBar "xmobar ~/.xmonad/xmobarrc" $ defaultConfig
@@ -34,6 +34,8 @@ main = do
 		, manageHook = manageDocks <+> shifts_<+> (isFullscreen --> doFullFloat) <+> manageHook defaultConfig 
 		, layoutHook = smartBorders . avoidStruts $ layoutHook defaultConfig
 		, handleEventHook = docksEventHook <+> fullscreenEventHook <+> handleEventHook defaultConfig
+
+		, startupHook = spawn $ message "echo" 0
 		}
 
 terminal_ = "urxvtc"
@@ -71,19 +73,22 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((altm, xK_minus), spawn "xbacklight -dec 100")
 	, ((altm, xK_equal), spawn "xbacklight -inc 100")
 
-	, ((altm, xK_comma), spawn "ponymix toggle")
-
 	, ((altm, xK_e), spawn $ terminal_ ++ " -title urxvt")
---	, ((altm, xK_r), spawn "firefox")
 	, ((altm, xK_r), spawn "qutebrowser")
 	, ((altm, xK_d), spawn $ term "irssi -c localhost")
---	, ((altm, xK_d), spawn "pidgin")
---	, ((altm, xK_z), spawn $ term "ncmpcpp")
+	, ((altm, xK_z), spawn $ term "ncmpcpp")
 	, ((altm, xK_x), spawn $ term "mutt")
 	, ((altm, xK_c), spawn $ term "pulsemixer")
 	, ((altm, xK_o), restart "/home/cptj/.xmonad/obx.sh" True)
---	, ((altm, xK_a), spawn "maim -s screenshot_" ++ getCurrentDate ++ ".png")
+
 	, ((altm, xK_a), spawn "maim -s screenshot$(date +'%Y-%m-%d_%H:%M:%S').png")
+
+	, ((altm, xK_comma), spawn "ponymix toggle")
+	, ((altm, xK_period), spawn "mpc toggle")
+	, ((altm, xK_f), spawn $ message "echo $(mpc status | head -1) @ $(mpc status | awk 'NR==2 { print $3 }')" 3)
+	, ((altm, xK_g), spawn "mpc listall music | sort --random-sort | head -20 | mpc add")
+	, ((altm .|. shim, xK_comma), spawn $ message "mpc prev | head -1" 3)
+	, ((altm .|. shim, xK_period), spawn $ message "mpc next | head -1" 3)
 	]
 	++
 	[((m .|. supm, k), windows $ f i)
@@ -97,6 +102,9 @@ keys_ conf@(XConfig {}) = M.fromList $
 term :: String -> String
 term s = terminal_ ++ " -title " ++ s ++ " -e " ++ s
 
+message :: String -> Int -> String
+message s n = s ++ " > " ++ messageFile ++ " && sleep " ++ (show n) ++ " && echo > " ++ messageFile
+
 altm = mod1Mask
 supm = mod4Mask
 shim = shiftMask
@@ -107,12 +115,14 @@ shifts_ = (composeAll
 --	, title     =? "urxvt"        --> doShift "1"
 --	, roleName  =? "buddy_list"   --> doShift "4"
 --	, roleName  =? "conversation" --> doShift "4"
---	, title     =? "ncmpcpp"      --> doShift "3"
+	, title     =? "ncmpcpp"      --> doShift "3"
 	, title     =? "pulsemixer"   --> doShift "3"
 	, title     =? "mutt"         --> doShift "3"
 	])
 
 roleName = stringProperty "WM_WINDOW_ROLE"
+
+messageFile = "~/.xmonad/message"
 
 --TODO newsbeuter
 
