@@ -1542,5 +1542,9 @@ config.bind('<Up>', 'prompt-item-focus prev', mode='prompt')
 #config.bind('n', 'prompt-accept no', mode='prompt')
 #config.bind('y', 'prompt-accept yes', mode='prompt')
 
+config.bind('k', 'prompt-accept yes', mode='yesno')
+config.bind('<Escape>', 'prompt-accept no', mode='yesno')
+config.bind('j', 'prompt-accept no', mode='yesno')
+
 ## Bindings for register mode
 config.bind('<Escape>', 'leave-mode', mode='register')
