@@ -3,6 +3,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Util.Scratchpad
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Replace
 import XMonad.Layout.NoBorders
@@ -31,12 +32,19 @@ main = do
 		, focusFollowsMouse  = False
 		, clickJustFocuses   = False
 
-		, manageHook = manageDocks <+> shifts_<+> (isFullscreen --> doFullFloat) <+> manageHook defaultConfig 
+		, manageHook = manageDocks <+> shifts_<+> (isFullscreen --> doFullFloat) <+> manageHook defaultConfig <+> manageScratchPad
 		, layoutHook = smartBorders . avoidStruts $ layoutHook defaultConfig
 		, handleEventHook = docksEventHook <+> fullscreenEventHook <+> handleEventHook defaultConfig
 
 		, startupHook = spawn $ message "echo" 0
 		}
+
+manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+	where
+		h = 0.4
+		w = 0.8
+		t = 0
+		l = (1 - w)/2
 
 terminal_ = "urxvtc"
 
@@ -44,7 +52,8 @@ mouse_ conf@(XConfig {}) = M.fromList []
 
 keys_ conf@(XConfig {}) = M.fromList $
 	[ 
-	  ((supm, xK_w), spawn "(killall xmobar && xmonad --restart) || xmonad --restart")
+--	  ((supm, xK_w), spawn "(killall xmobar && xmonad --restart) || xmonad --restart")
+	  ((supm, xK_w), spawn "xmonad --restart")
 
 	, ((supm          , xK_j)      , windows W.focusDown)
 	, ((supm          , xK_k)      , windows W.focusUp)
@@ -60,13 +69,14 @@ keys_ conf@(XConfig {}) = M.fromList $
 
 	, ((supm, xK_q), kill)
 
-	, ((altm, xK_Return), spawn "dmenu_run")
+--	, ((altm, xK_Return), spawn "dmenu_run")
+	, ((altm, xK_Return), scratchpadSpawnActionTerminal terminal_)
 
 	, ((altm, xK_F1), spawn "systemctl suspend")
 	, ((altm, xK_F2), spawn "i3lock -uc 000000")
 
-	, ((altm, xK_F3), spawn "xrandr --output HDMI2 --off --output eDP1 --auto")
-	, ((altm, xK_F4), spawn "xrandr --output HDMI2 --auto --output eDP1 --off")
+	, ((altm, xK_F3), spawn "xrandr --output HDMI-2 --off --output eDP-1 --auto")
+	, ((altm, xK_F4), spawn "xrandr --output HDMI-2 --auto --output eDP-1 --off")
 
 	, ((altm, xK_bracketleft), spawn "xbacklight -dec 10")
 	, ((altm, xK_bracketright), spawn "xbacklight -inc 10")

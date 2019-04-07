@@ -1,7 +1,4 @@
-source "gpg -dq $HOME/.mutt/pw.gpg |"
-
-set imap_user="jynn"
-set imap_pass=$my_pw
+source "gpg -dq $HOME/.mutt/imap_credentials_jynn@storage42.de.gpg |"
 
 set folder=imap://storage42.de:143/
 
@@ -29,7 +26,7 @@ set from="kevin@storage42.de"
 set use_from=yes
 set envelope_from="yes"
 
-set smtp_url=smtp://jynn:$my_pw@storage42.de:25
+set smtp_url=smtp://${imap_user}:${imap_pass}@storage42.de:25
 set ssl_force_tls=yes
 
 set alias_file = ~/.mutt/aliases
@@ -47,7 +44,7 @@ source $HOME/.mutt/gpg.rc
 
 set crypt_autosign = yes
 set pgp_use_gpg_agent = yes
-set pgp_sign_as = 1FBB803D720796FEF5A0D70F5B073421CD4292AE
+set pgp_sign_as = B6A6F36FBD5F83B02424BD58CCA924A6AB82EB91
 set pgp_timeout = 0
 
 set crypt_opportunistic_encrypt = yes
