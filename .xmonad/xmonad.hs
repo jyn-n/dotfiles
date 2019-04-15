@@ -75,8 +75,8 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((altm, xK_F1), spawn "systemctl suspend")
 	, ((altm, xK_F2), spawn "i3lock -uc 000000")
 
-	, ((altm, xK_F3), spawn "xrandr --output HDMI-2 --off --output eDP-1 --auto")
-	, ((altm, xK_F4), spawn "xrandr --output HDMI-2 --auto --output eDP-1 --off")
+	, ((altm, xK_F3), spawn "xrandr --output HDMI2 --off --output eDP1 --auto")
+	, ((altm, xK_F4), spawn "xrandr --output HDMI2 --auto --output eDP1 --off")
 
 	, ((altm, xK_bracketleft), spawn "xbacklight -dec 10")
 	, ((altm, xK_bracketright), spawn "xbacklight -inc 10")
