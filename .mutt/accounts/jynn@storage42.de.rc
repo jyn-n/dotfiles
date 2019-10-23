@@ -1,0 +1,14 @@
+set realname="Kevin Klinge"
+set from="kevin@storage42.de"
+set use_from=yes
+set envelope_from="yes"
+
+set smtp_url=smtp://jynn:`pass jynn@storage42.de`@storage42.de:25
+set ssl_force_tls=yes
+
+set crypt_opportunistic_encrypt = yes
+set crypt_autosign = yes
+set pgp_sign_as = B6A6F36FBD5F83B02424BD58CCA924A6AB82EB91
+unset smime_is_default
+unset smime_default_key
+

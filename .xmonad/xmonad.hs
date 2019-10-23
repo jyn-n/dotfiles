@@ -87,7 +87,7 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((altm, xK_r), spawn "qutebrowser")
 	, ((altm, xK_d), spawn $ term "irssi -c localhost")
 	, ((altm, xK_z), spawn $ term "ncmpcpp")
-	, ((altm, xK_x), spawn $ term "mutt")
+	, ((altm, xK_x), spawn $ term "neomutt")
 	, ((altm, xK_c), spawn $ term "pulsemixer")
 	, ((altm, xK_o), restart "/home/cptj/.xmonad/obx.sh" True)
 
@@ -121,13 +121,13 @@ shim = shiftMask
 
 shifts_ = (composeAll
 	[ --className =? "Firefox"      --> doShift "2"
-	 title     =? "qutebrowser"  --> doShift "2"
+	 title     =? "qutebrowser"  --> doShift "1"
 --	, title     =? "urxvt"        --> doShift "1"
 --	, roleName  =? "buddy_list"   --> doShift "4"
 --	, roleName  =? "conversation" --> doShift "4"
-	, title     =? "ncmpcpp"      --> doShift "3"
-	, title     =? "pulsemixer"   --> doShift "3"
-	, title     =? "mutt"         --> doShift "3"
+	, title     =? "ncmpcpp"      --> doShift "10"
+	, title     =? "pulsemixer"   --> doShift "10"
+	, title     =? "neomutt"         --> doShift "10"
 	])
 
 roleName = stringProperty "WM_WINDOW_ROLE"

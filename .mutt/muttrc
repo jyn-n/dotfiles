@@ -1,14 +1,5 @@
-source "gpg -dq $HOME/.mutt/imap_credentials_jynn@storage42.de.gpg |"
-
-set folder=imap://storage42.de:143/
-
-set spoolfile=+INBOX
-set postponed = +Drafts
-mailboxes = +INBOX
-
 set header_cache=~/.cache/mutt/header
 set message_cachedir=~/.cache/mutt/messages
-#source "~/.mutt/purgecache.sh '$message_cachedir'|"
 
 set fast_reply=yes
 set include=yes
@@ -16,18 +7,17 @@ set include=yes
 unset imap_passive
 set imap_keepalive=300
 set mail_check=5
+set reverse_name
+set forward_quote
+set charset="utf-8"
+set send_charset = "utf-8:iso-8859-1:us-ascii"
+
+set status_chars = " *%A"
+set status_format = "[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+set date_format = "%Y.%m.%d %H:%M"
 
 set sort=reverse-threads
 set sort_aux=last-date-received
-
-set record=+Sent
-set realname="Kevin Klinge"
-set from="kevin@storage42.de"
-set use_from=yes
-set envelope_from="yes"
-
-set smtp_url=smtp://${imap_user}:${imap_pass}@storage42.de:25
-set ssl_force_tls=yes
 
 set alias_file = ~/.mutt/aliases
 set sort_alias = alias
@@ -42,9 +32,21 @@ set editor=vim
 source $HOME/.mutt/colors.linux
 source $HOME/.mutt/gpg.rc
 
-set crypt_autosign = yes
 set pgp_use_gpg_agent = yes
-set pgp_sign_as = B6A6F36FBD5F83B02424BD58CCA924A6AB82EB91
 set pgp_timeout = 0
 
-set crypt_opportunistic_encrypt = yes
+set virtual_spoolfile = yes
+set folder = $HOME/.mail
+source $HOME/.mutt/mailboxes
+
+unset record
+
+macro index c "<change-vfolder>?" "Change to vfolder overview"
+
+source "$HOME/.mutt/smime.rc
+
+source "$HOME/.mutt/accounts/jynn@storage42.de.rc"
+
+macro index 1 '<enter-command>source "$HOME/.mutt/accounts/jynn@storage42.de.rc"<enter>'
+macro index 2 '<enter-command>source "$HOME/.mutt/accounts/yi7266@kit.edu.rc"<enter>'
+

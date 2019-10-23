@@ -1192,7 +1192,7 @@ c.tabs.tabs_are_windows = False
 ## Either ''webkit'' or ''webengine'' * `{private}` : Indicates when
 ## private mode is enabled.
 ## Type: FormatString
-c.tabs.title.format = '{index}: {title}'
+c.tabs.title.format = '{index}: {current_title}'
 
 ## The format to use for the tab title for pinned tabs. The same
 ## placeholders like for `tabs.title.format` are defined.
@@ -1444,6 +1444,7 @@ config.bind('yt', 'yank title')
 config.bind('yy', 'yank')
 # config.bind('{{', 'navigate prev -t')
 # config.bind('}}', 'navigate next -t')
+config.bind('z', 'spawn --userscript youtube-dl.sh /tmp/ytdllog')
 
 ## Bindings for caret mode
 config.bind('$', 'move-to-end-of-line', mode='caret')

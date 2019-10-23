@@ -6,7 +6,7 @@ function user_info(){
 
 function virtual_env_info(){
 	[[ -n $VIRTUAL_ENV_PATH ]] || return
-	[[ `pwd` == ${VIRTUAL_ENV_PATH}* ]] && local venv_status="%{$fg[green]%}" || local venv_status="%{$fg_bold[red]%}"
+	[[ `pwd` == ${VIRTUAL_ENV_PATH}* ]] && local venv_status="%{$fg[blue]%}" || local venv_status="%{$fg_bold[red]%}"
 	echo " ${venv_status}(`basename $VIRTUAL_ENV_PATH`)%{$reset_color%}"
 }
 

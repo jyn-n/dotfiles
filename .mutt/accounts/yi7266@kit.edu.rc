@@ -1,0 +1,14 @@
+set realname="Kevin Klinge"
+set from="kevin.klinge@kit.edu"
+set use_from=yes
+set envelope_from="yes"
+
+set smtp_url=smtp://yi7266:`pass yi7266@kit.edu`@smtp.kit.edu:25
+set ssl_force_tls=yes
+
+set crypt_opportunistic_encrypt = yes
+set crypt_autosign = yes
+unset pgp_sign_as
+set smime_is_default
+set smime_default_key="800339d3.0"
+

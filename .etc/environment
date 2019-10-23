@@ -4,3 +4,4 @@
 # Syntax: simple "KEY=VAL" pairs on separate lines
 #
 EDITOR=vim
+_JAVA_AWT_WM_NONREPARENTING=1
