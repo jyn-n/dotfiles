@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import pathlib
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 LOG_PATH = pathlib.Path("/var/log/pacman.log")
 
@@ -12,18 +12,26 @@ def get_log():
     return log_text
 
 def parse_pacman_line(line):
-    if len(line) > 0:
-        date_str = line[:18]
-        pacman_indicator = line[19:27]
-        message = line[28:]
+    if len(line) == 0:
+        return None
 
-        if pacman_indicator == "[PACMAN]":
-            parsed_date = datetime.strptime(date_str,
-                                            "[%Y-%m-%d %H:%M]")
-            return {"date": parsed_date,
-                    "message": message}
+    parsed_line = re.search('^\[([^]]*)\] \[([^]]*)\] (.*)$', line)
+    if parsed_line is None:
+        return None
 
-    return None
+    date_str, pacman_indicator, message = parsed_line.groups()
+
+    if pacman_indicator != "PACMAN":
+        return None
+
+    try:
+        parsed_date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S%z")
+    except:
+        return None
+    return {
+        "date": parsed_date,
+        "message": message
+    }
 
 def get_last_sync(log_text):
     last_sync = None
@@ -51,12 +59,10 @@ def get_last_system_upgrade(log_text):
     return last_upgrade
 
 def get_diffs(t):
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
     diff = now - t
 
-    if diff.days > 0:
-        return True
-    return False
+    return diff.days > 0
 
 if __name__ == "__main__":
     print ( get_diffs ( get_last_system_upgrade ( get_log() ) ) )
