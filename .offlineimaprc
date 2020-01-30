@@ -1,0 +1,43 @@
+[general]
+pythonfile = ~/.offlineimap/get_pass.py
+accounts = jynn@storage42.de,yi7266@kit.edu
+
+[Account jynn@storage42.de]
+localrepository = jynn@storage42.de-local
+remoterepository = jynn@storage42.de-remote
+autorefresh = 0.05
+postsynchook = ~/.offlineimap/notmuch-hook.sh
+
+[Repository jynn@storage42.de-local]
+type = Maildir
+localfolders = ~/.mail/jynn@storage42.de
+
+[Repository jynn@storage42.de-remote]
+type = IMAP
+remotehost = storage42.de
+remoteuser = jynn
+remoteport = 143
+ssl = no
+remotepasseval = get_pass("jynn@storage42.de")
+keepalive = 60
+holdconnectionopen = yes
+
+[Account yi7266@kit.edu]
+localrepository = yi7266@kit.edu-local
+remoterepository = yi7266@kit.edu-remote
+autorefresh = 0.05
+postsynchook = ~/.offlineimap/notmuch-hook.sh
+
+[Repository yi7266@kit.edu-local]
+type = Maildir
+localfolders = ~/.mail/yi7266@kit.edu
+
+[Repository yi7266@kit.edu-remote]
+type = IMAP
+remotehost = imap.kit.edu
+remoteuser = yi7266
+remotepasseval = get_pass("yi7266@kit.edu")
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+keepalive = 60
+holdconnectionopen = yes
+

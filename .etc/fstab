@@ -11,3 +11,5 @@ UUID=4035314b-ca0e-47c1-9646-b8f981c18a8c	/home     	ext4      	rw,relatime	0 2
 
 /etc /home/cptj/.etc none rw,bind,noauto,x-systemd.automount 0 0
 
+/swapfile none swap defaults 0 0
+

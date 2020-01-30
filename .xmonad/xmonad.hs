@@ -52,8 +52,8 @@ mouse_ conf@(XConfig {}) = M.fromList []
 
 keys_ conf@(XConfig {}) = M.fromList $
 	[ 
---	  ((supm, xK_w), spawn "(killall xmobar && xmonad --restart) || xmonad --restart")
-	  ((supm, xK_w), spawn "xmonad --restart")
+	  ((supm, xK_w), spawn "(killall xmobar && xmonad --restart) || xmonad --restart")
+--	  ((supm, xK_w), spawn "xmonad --restart")
 
 	, ((supm          , xK_j)      , windows W.focusDown)
 	, ((supm          , xK_k)      , windows W.focusUp)
