@@ -7,6 +7,8 @@ import XMonad.Util.Scratchpad
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Replace
 import XMonad.Layout.NoBorders
+import XMonad.Layout.IndependentScreens
+import XMonad.Actions.CycleWS
 
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -16,15 +18,15 @@ import Data.Time
 main = do
 	replace
 	xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobarrc"
+	nScreens <- countScreens
 	xmonad $ defaultConfig
---main =
---	xmonad =<< statusBar "xmobar ~/.xmonad/xmobarrc" $ defaultConfig
 		{ keys          = keys_
 		, mouseBindings = mouse_
 
 		, terminal = terminal_
 
-		, workspaces = map show [1 .. 10 :: Int]
+--		, workspaces = withScreens 2 (map show [0 .. 9 :: Int])
+		, workspaces = withScreens nScreens (workspaces defaultConfig)
 
 		, borderWidth        = 1
 		, normalBorderColor  = "black"
@@ -52,8 +54,7 @@ mouse_ conf@(XConfig {}) = M.fromList []
 
 keys_ conf@(XConfig {}) = M.fromList $
 	[ 
-	  ((supm, xK_w), spawn "(killall xmobar && xmonad --restart) || xmonad --restart")
---	  ((supm, xK_w), spawn "xmonad --restart")
+	  ((supm, xK_w), spawn "xmonad --restart")
 
 	, ((supm          , xK_j)      , windows W.focusDown)
 	, ((supm          , xK_k)      , windows W.focusUp)
@@ -65,11 +66,13 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((supm          , xK_l)      , sendMessage Expand)
 	, ((supm          , xK_Return) , sendMessage NextLayout)
 
+	, ((supm          , xK_u)      , nextScreen)
+	, ((supm .|. shim , xK_u)      , shiftNextScreen)
+
 	, ((supm          , xK_b)      , sendMessage ToggleStruts)
 
 	, ((supm, xK_q), kill)
 
---	, ((altm, xK_Return), spawn "dmenu_run")
 	, ((altm, xK_Return), scratchpadSpawnActionTerminal terminal_)
 
 	, ((altm, xK_F1), spawn "systemctl suspend")
@@ -101,13 +104,11 @@ keys_ conf@(XConfig {}) = M.fromList $
 	, ((altm .|. shim, xK_period), spawn $ message "mpc next | head -1" 3)
 	]
 	++
-	[((m .|. supm, k), windows $ f i)
-		| (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_grave])
-		, (f, m) <- [(W.greedyView, 0), (W.shift, shim)]]
-	++
-	[((m .|. supm, k), screenWorkspace s >>= flip whenJust (windows . f))
-		| (k, s) <- zip [xK_e, xK_r] [0..]
-		, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+	[
+		((m .|. supm, k), windows $ onCurrentScreen f i)
+			| (i, k) <- zip (workspaces' conf) ([xK_grave] ++ [xK_1 .. xK_9])
+			, (f, m) <- [(W.greedyView, 0), (W.shift, shim)]
+	]
 
 term :: String -> String
 term s = terminal_ ++ " -title " ++ s ++ " -e " ++ s
@@ -120,19 +121,14 @@ supm = mod4Mask
 shim = shiftMask
 
 shifts_ = (composeAll
-	[ --className =? "Firefox"      --> doShift "2"
+	[
 	 title     =? "qutebrowser"  --> doShift "1"
---	, title     =? "urxvt"        --> doShift "1"
---	, roleName  =? "buddy_list"   --> doShift "4"
---	, roleName  =? "conversation" --> doShift "4"
-	, title     =? "ncmpcpp"      --> doShift "10"
-	, title     =? "pulsemixer"   --> doShift "10"
-	, title     =? "neomutt"         --> doShift "10"
+	, title     =? "ncmpcpp"      --> doShift "0"
+	, title     =? "pulsemixer"   --> doShift "0"
+	, title     =? "neomutt"         --> doShift "0"
 	])
 
 roleName = stringProperty "WM_WINDOW_ROLE"
 
 messageFile = "~/.xmonad/message"
-
---TODO newsbeuter
 
