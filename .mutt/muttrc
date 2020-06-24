@@ -43,8 +43,6 @@ unset record
 
 macro index c "<change-vfolder>?" "Change to vfolder overview"
 
-source "$HOME/.mutt/smime.rc
-
 source "$HOME/.mutt/accounts/jynn@storage42.de.rc"
 
 macro index 1 '<enter-command>source "$HOME/.mutt/accounts/jynn@storage42.de.rc"<enter>'
