@@ -924,7 +924,7 @@ c.input.partial_timeout = 0
 ## Enable Opera-like mouse rocker gestures. This disables the context
 ## menu.
 ## Type: Bool
-c.input.rocker_gestures = False
+c.input.mouse.rocker_gestures = False
 
 ## Enable Spatial Navigation. Spatial navigation consists in the ability
 ## to navigate between focusable elements in a Web page, such as
@@ -1065,7 +1065,7 @@ c.spellcheck.languages = []
 
 ## Hide the statusbar unless a message is shown.
 ## Type: Bool
-c.statusbar.hide = False
+# c.statusbar.hide = False
 
 ## Padding for the statusbar.
 ## Type: Padding
